@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des hôtels</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#F0F0F0]">
+
+  <!-- Navbar mobile avec hamburger -->
+   <!-- Overlay -->
+<div id="overlay" 
+     class="fixed inset-0 bg-black bg-opacity-50 hidden 
+      transition-opacity duration-300 ease-in-out z-30"></div>
+  <nav  class="fixed top-0 z-50 w-full bg-[rgba(73,76,79,1)] shadow px-4 py-2 flex items-center justify-between sm:hidden">
+    <button id="hamburger" class="p-2 rounded ">
+      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+    <div class="flex">
+   <img src="images/logo.svg" class="h-6 mr-3" alt="Logo" />
+    <h1 class="text-lg font-bold text-white">RED PRODUCT</h1>
+    </div>
+
+  </nav>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class=" fixed top-0 left-0 w-64 h-screen bg-[rgba(73,76,79,1)] shadow transform -translate-x-full sm:translate-x-0 transition-transform duration-300">
+    <div class="p-6">
+      <a href="#" class="flex items-center mb-6">
+        <img src="images/logo.svg" class="h-6 mr-3" alt="Logo" />
+        <span class="text-lg font-semibold text-white">RED PRODUCT</span>
+      </a>
+      <p class="mb-4 text-white">Principal</p>
+      <ul class="space-y-2">
+        <li>
+          <a href="dasboard.html" class="flex items-center px-2 py-1.5 text-white  hover:bg-gray-700 rounded">
+            <img src="images/Vector (3).svg" class="w-5 h-5" alt="Dashboard">
+            <span class="ml-3">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="listes.html" class="flex items-center px-2 py-1.5 bg-[#F0F0F0] text-black  rounded">
+            <img src="images/Vector (2).svg" class="w-5 h-5" alt="Liste">
+            <span class="ml-3">Liste des hôtels</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Contenu principal -->
+  <main class="sm:ml-64  ">
+
+    <!-- Header avec barre de recherche et icônes -->
+    <div class="flex items-center justify-between bg-white shadow border-b border-gray-300 px-4 py-2 p-4 flex-wrap">
+  <!-- Titre -->
+  <p class="font-semibold text-lg sm:text-2xl">Liste des hôtels</p>
+
+  <!-- Barre de recherche + icônes -->
+  <div class="flex items-center space-x-4 ">
+    <!-- Barre de recherche (masquée sur mobile) -->
+    <div class="relative w-64 hidden sm:block">
+      <img src="images/search.svg" alt="Search" 
+           class="absolute left-2 top-1/2 -translate-y-1/2 w-5 h-5 flex-shrink-0">
+      <input type="search" placeholder="search"
+        class="border rounded-3xl pl-8 pr-4 py-2 h-8 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+    </div>
+
+    <!-- Icônes -->
+    <div class="flex items-start space-x-4">
+      <img src="images/Symbol.svg" alt="base" class="w-6 h-6 mt-2"> 
+      <img src="images/List → Item → Link.png" alt="exposant" class="w-6 h-6  ">
+
+     </div>
+    <!-- Profil -->
+    <button class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full flex-shrink-0">
+      <img src="images/a0.jpg.svg" alt="user photo" class="w-8 h-8 rounded-full">
+    </button>
+
+    <!-- Logout -->
+    <a href="#"><img id="logoutBtn" src="images/log-out.svg" alt="log-out" class="w-6 h-6 flex-shrink-0"></a>
+  </div>
+ </div>
+
+
+    <!-- Header principal -->
+    <div class="">
+      <div class="flex items-center justify-between bg-white shadow  p-8  mb-6">
+      <h2 class="text-2xl font-bold">Hôtels <span id="hotelsCount" class="text-gray-400 ml-2">8</span></h2>
+      <button id="openModal" type="submit" class="text-black px-4 py-2 border rounded-2xl border-black">
+        + Créer un nouveau hôtel
+    
+      </button>
+      </div>
+      <!-- Modal pour créer un nouvel hôtel -->
+      <div id="modalContent" class="hidden flex fixed inset-0 justify-center items-center sm:mt-12 overflow-auto z-50">
+      <div id="modalBox" class=" bg-white shadow-lg rounded-lg  w-[90%] sm:w-[70%] max-w-3xl p-6 overflow-y-auto max-h-[90vh]">
+    <h1  class="text-sm lg:text-2xl md:text-xl  font-bold text-gray-800 mb-6 mt-4 border-b border-b border-dashed border-b-[2px] flex flex-nowrap">
+      <img id="closeModal" src="images/arrow-left.svg" alt="return" class="text-2xl md:mt-2 mr-2 ">
+      CRÉER UN NOUVEAU HÔTEL</h1>
+
+    <form class="space-y-6">
+      <!-- Champs alignés par deux -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Nom de l’hôtel</label>
+          <input type="text" placeholder="Nom de l'hôtel"
+                 class="mt-1 block w-full border p-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Adresse</label>
+          <input type="text" placeholder="Adresse"
+                 class="mt-1 block w-full border p-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">E-mail</label>
+          <input type="email" placeholder="email@hotel.com"
+                 class="mt-1 block w-full border p-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Numéro de téléphone</label>
+          <input type="tel" placeholder="+221 77 000 00 00"
+                 class="mt-1 block w-full border p-2  rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Prix par nuit</label>
+          <input type="text" placeholder="25000"
+                 class="mt-1 block w-full border p-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Type de devise</label>
+          <select
+         class="mt-1 block w-[70%] md:w-full lg:w-full border p-2 rounded-md border-gray-300 shadow-sm
+           focus:border-blue-500 focus:ring-blue-500">
+          <option>F XOF </option>
+          <option> Euro</option>
+          <option> Dollar </option>
+
+          </select> 
+      </div>
+
+      </div>
+
+      <!-- Bloc Ajouter une photo -->
+      <div >
+        <label class="block text-sm font-medium text-gray-700 ">Ajouter une photo</label>
+
+      </div>
+      <div class="border-2 border border-gray-300 rounded-lg p-0 flex flex-col items-center justify-center">
+          <img src="images/image (8).svg" alt="" class="w-24 h-24">
+           <p class="text-sm text-gray-500">Ajouter une photo</p>
+           <input type="file" accept="image/*" class="mt-2 text-sm text-gray-500">
+      </div>
+
+
+
+      <!-- Bouton -->
+      <div class="flex justify-end ">
+        <button type="submit"
+                class="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 bg-[#555555] text-white font-semibold py-2  rounded-md hover:bg-green-700">
+          Enregistrer
+        </button>
+      </div>
+    </form>
+  </div>
+    </div>
+</div>
+    <!-- Grid des hôtels -->
+    <div id="hotelsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 z-4 p-4 mt-4">
+      
+       <div class="bg-white shadow rounded-lg overflow-hidden">
+      <img src="images/image.svg" alt="Hôtel Terrou-Bi" class="w-full h-40 object-cover">
+      <div class="p-4">
+        <p class=" text-xs text-[#8D4B38]">Boulevard Martin Luther King, Dakar</p>
+        <h2 class="text-lg font-semibold text-[#222222]">Hôtel Terrou-Bi</h2>
+        <p class="text-[#222222] text-xs mt-2">25.000 XOF par nuit</p>
+      </div>
+    </div>
+
+    <!-- Hôtel 2 -->
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <img src="images/image (1).svg" alt="King Fahd Palace" class="w-full h-40 object-cover">
+      <div class="p-4">
+        <p class="text-[#8D4B38] text-xs">Rte des Almadies, Dakar</p>
+        <h2 class="text-lg font-semibold">King Fahd Palace</h2>
+        <p class="text-[#222222] text-xs mt-2">20.000 XOF par nuit</p>
+      </div>
+    </div>
+
+    <!-- Hôtel 3 -->
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <img src="images/image (2).svg" alt="Radisson Blu Hotel" class="w-full h-40 object-cover">
+      <div class="p-4">
+        <p class="text-[#8D4B38] text-xs">Rte de la Corniche O, Dakar</p>
+        <h2 class="text-lg font-semibold">Radisson Blu Hotel</h2>
+        <p class="text-[#222222] text-xs mt-2">22.000 XOF par nuit</p>
+      </div>
+    </div>
+
+    <!-- Hôtel 4 -->
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <img src="images/image (3).svg" alt="Pullman Dakar Teranga" class="w-full h-40 object-cover">
+      <div class="p-4">
+        <p class="text-[#8D4B38] text-xs">Place de l’Indépendance, Dakar</p>
+        <h2 class="text-lg font-semibold">Pullman Dakar Teranga</h2>
+        <p class="text-[#222222] text-xs mt-2">30.000 XOF par nuit</p>
+      </div>
+    </div>
+
+
+
+    <!-- Hôtel 5 -->
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <img src="images/image (4).svg" alt="Hôtel Terrou-Bi" class="w-full h-40 object-cover">
+      <div class="p-4">
+       <p class="text-[#8D4B38] text-xs">Lac Rose, Dakar</p>
+        <h2 class="text-lg font-semibold">Hôtel Lac Rose</h2>
+        <p class="text-[#222222] text-xs mt-2">25.000 XOF par nuit</p>
+      </div>
+    </div>
+
+    <!-- Hôtel 6 -->
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <img src="images/image (5).svg" alt="King Fahd Palace" class="w-full h-40 object-cover">
+      <div class="p-4">
+        <p class="text-[#8D4B38] text-xs">Mbour, Sénégal </p>
+        <h2 class="text-lg font-semibold">Hôtel Saly</h2>
+        <p class="text-[#222222] text-xs mt-2">20.000 XOF par nuit</p>
+      </div>
+    </div>
+
+    <!-- Hôtel 7 -->
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <img src="images/image (6).svg" alt="Radisson Blu Hotel" class="w-full h-40 object-cover">
+      <div class="p-4">
+         <p class="text-[#8D4B38] text-xs">BP64, Saly 23000</p>
+        <h2 class="text-md font-semibold mb-4">Palm Beach Resort & Spa</h2>
+        <p class="text-[#222222] text-xs mt-2">22.000 XOF par nuit</p>
+      </div>
+    </div>
+
+    <!-- Hôtel 8 -->
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <img src="images/image (7).svg" alt="Pullman Dakar Teranga" class="w-full h-40 object-cover">
+      <div class="p-4">
+          <p class="text-[#8D4B38] text-xs">Place de l'Independance, 10 Rue PL 29, Dakar</p>
+        <h2 class="text-lg font-semibold">Pullman Dakar Teranga</h2>
+        <p class="text-[#222222] text-xs mt-2">30.000 XOF par nuit</p>
+      </div>
+    </div>
+  
+    </div>
+  </main>
+
+  <!-- Script toggle sidebar -->
+  <script>
+    const API_URL = 'http://localhost:5000/api';
+
+    // Protection : rediriger si pas de token
+    const token = localStorage.getItem('token');
+    if (!token) window.location.href = 'index.html';
+
+    // Sidebar hamburger
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    if (hamburger) hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('-translate-x-full');
+      if (overlay) overlay.classList.toggle('hidden');
+    });
+    if (overlay) overlay.addEventListener('click', () => {
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('hidden');
+    });
+
+    // Déconnexion
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await fetch(`${API_URL}/auth/logout`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+      } catch(_) {}
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = 'index.html';
+    });
+
+    // Modal ouverture/fermeture
+    const openModal    = document.getElementById('openModal');
+    const modalContent = document.getElementById('modalContent');
+    const closeModal   = document.getElementById('closeModal');
+    const modalBox     = document.getElementById('modalBox');
+    if (openModal)    openModal.addEventListener('click', () => modalContent.classList.remove('hidden'));
+    if (closeModal)   closeModal.addEventListener('click', () => modalContent.classList.add('hidden'));
+    if (modalContent) modalContent.addEventListener('click', (e) => {
+      if (!modalBox.contains(e.target)) modalContent.classList.add('hidden');
+    });
+
+    // Soumission du formulaire hôtel (modal)
+    const hotelForm = document.querySelector('#modalBox form');
+    if (hotelForm) {
+      hotelForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const inputs  = hotelForm.querySelectorAll('input, select');
+        const formData = new FormData();
+        formData.append('name',          inputs[0].value);
+        formData.append('address',       inputs[1].value);
+        formData.append('email',         inputs[2].value);
+        formData.append('phone',         inputs[3].value);
+        formData.append('pricePerNight', inputs[4].value);
+        formData.append('currency',      hotelForm.querySelector('select').value);
+        const imgInput = hotelForm.querySelector('input[type="file"]');
+        if (imgInput && imgInput.files[0]) formData.append('image', imgInput.files[0]);
+
+        try {
+          const res  = await fetch(`${API_URL}/hotels`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` },
+            body: formData
+          });
+          const data = await res.json();
+          if (res.ok) {
+            alert('✅ Hôtel créé avec succès !');
+            modalContent.classList.add('hidden');
+            loadHotels();
+          } else {
+            alert('❌ ' + (data.message || 'Erreur'));
+          }
+        } catch(err) {
+          alert('❌ Erreur de connexion au serveur');
+        }
+      });
+    }
+
+    // Charger les hôtels depuis l'API
+    async function loadHotels() {
+      const grid    = document.getElementById('hotelsGrid');
+      const counter = document.getElementById('hotelsCount');
+      if (!grid) return;
+
+      try {
+        const res  = await fetch(`${API_URL}/hotels`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+
+        if (!res.ok || data.hotels.length === 0) {
+          // Aucun hôtel en DB → garder les cartes statiques
+          return;
+        }
+
+        // Mettre à jour le compteur
+        if (counter) counter.textContent = data.pagination.total;
+
+        // Remplacer les cartes par les données de l'API
+        grid.innerHTML = data.hotels.map(h => `
+          <div class="bg-white shadow rounded-lg overflow-hidden">
+            <img src="${h.image ? 'http://localhost:5000' + h.image : 'images/image.svg'}"
+                 alt="${h.name}" class="w-full h-40 object-cover">
+            <div class="p-4">
+              <p class="text-xs text-[#8D4B38]">${h.address}</p>
+              <h2 class="text-lg font-semibold text-[#222222]">${h.name}</h2>
+              <p class="text-[#222222] text-xs mt-2">
+                ${Number(h.pricePerNight).toLocaleString('fr-FR')} ${h.currency} par nuit
+              </p>
+            </div>
+          </div>
+        `).join('');
+
+      } catch(err) {
+        console.error('Erreur chargement hôtels :', err);
+        // En cas d'erreur réseau → garder les cartes statiques
+      }
+    }
+    loadHotels();
+  </script>
+</body>
+</html>

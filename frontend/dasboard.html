@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#F0F0F0]">
+
+
+  <!-- Navbar mobile avec hamburger -->
+  <nav class="fixed top-0 z-50 w-full bg-[rgba(73,76,79,1)] shadow px-4 py-2 flex items-center justify-between sm:hidden">
+    <button id="hamburger" class="p-2 ">
+      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+    <div class="flex">
+   <img src="images/logo.svg" class="h-6 mr-3" alt="Logo" />
+    <h1 class="text-lg font-bold text-white">RED PRODUCT</h1>
+    </div>
+
+  </nav>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed top-0 left-0 w-64 h-screen bg-[rgba(73,76,79,1)] shadow transform -translate-x-full sm:translate-x-0 transition-transform duration-300">
+    <div class="p-6">
+      <a href="#" class="flex items-center mb-6">
+        <img src="images/logo.svg" class="h-6 mr-3" alt="Logo" />
+        <span class="text-lg font-semibold text-white">RED PRODUCT</span>
+      </a>
+      <p class="mb-4 text-white">Principal</p>
+      <ul class="space-y-2">
+        <li>
+          <a href="dasboard.html" class="flex items-center px-2 py-1.5 bg-[#F0F0F0] text-black  rounded">
+            <img src="images/Vector.svg" class="w-5 h-5" alt="Dashboard">
+            <span class="ml-3">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="listes.html" class="flex items-center px-2 py-1.5  rounded">
+            <img src="images/Vector (1).svg" class="w-5 h-5" alt="Liste">
+            <span class="ml-3">Liste des hôtels</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  
+
+  <!-- Contenu principal -->
+  <main class="sm:ml-64  sm:mt-0">
+
+    <!-- Header avec barre de recherche et icônes -->
+    <div class="flex items-center justify-between bg-white shadow border-b border-gray-300 px-4 py-2  flex-wrap">
+    <!-- Titre -->
+    <p class="font-semibold text-lg sm:text-2xl">Liste des hôtels</p>
+
+   <!-- Barre de recherche + icônes -->
+    <div class="flex items-center space-x-4">
+    <!-- Barre de recherche (masquée sur mobile) -->
+    <div class="relative w-64 hidden sm:block">
+      <img src="images/search.svg" alt="Search" 
+           class="absolute left-2 top-1/2 -translate-y-1/2 w-5 h-5 flex-shrink-0">
+      <input type="search" placeholder="search"
+        class="border rounded-3xl pl-8 pr-4 py-2 h-8 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+    </div>
+
+    <!-- Icônes -->
+    <div class="flex items-start space-x-4">
+      <img src="images/Symbol.svg" alt="base" class="w-6 h-6 mt-2"> 
+      <img src="images/List → Item → Link.png" alt="exposant" class="w-6 h-6  ">
+
+     </div>
+
+    <!-- Profil -->
+    <button class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full flex-shrink-0">
+      <img src="images/a0.jpg.svg" alt="user photo" class="w-8 h-8 rounded-full">
+    </button>
+
+    <!-- Logout -->
+    <a href="#"><img id="logoutBtn" src="images/log-out.svg" alt="log-out" class="w-6 h-6 flex-shrink-0"></a>
+   </div>
+   </div>
+
+
+    <!-- Header principal -->
+    <div class="flex items-center justify-between bg-white shadow  px-4 py-2 mb-6">
+      <div class="">
+      <p class="text-3xl font-semibold pb-2">Bienvenue sur RED Product</p>
+      <p>Lorem ipsum dolor sit amet consectetur</p>
+    </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4  bg-[#F0F0F0]">
+      
+    <!-- Card 1 -->
+    <div class="bg-white shadow rounded-lg p-4 flex items-center md:w-full md:h-[106px]">
+    <div class="flex-shrink-0 bg-[#A88ADD] text-purple-600 p-4 rounded-full">
+      <img src="images/Symbol (1).svg" alt="">
+    </div>
+    <div class="ml-4">
+      <div class="flex">
+        <h2 class="text-4xl">125</h2>
+        <p class="text-gray-700 m-2">Formulaires</p>
+      </div>
+      <span class="text-sm text-gray-500">Je ne sais pas quoi mettre</span>
+    </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="bg-white shadow rounded-lg p-6 flex items-center md:w-full md:h-[106px]">
+    <div class="flex-shrink-0 bg-[#0CC2AA] text-green-600 p-4 rounded-full">
+      <img src="images/Symbol (3).svg" alt="">
+    </div>
+    <div class="ml-4">
+      <div class="flex">
+        <h2 class="text-4xl">40</h2>
+        <p class="text-gray-700 m-2">Messages</p>
+      </div>
+      <span class="text-sm text-gray-500">Je ne sais pas quoi mettre</span>
+    </div>
+    </div>
+
+     <!-- Card 3 -->
+     <div class="bg-white shadow rounded-lg p-6 flex items-center md:w-full md:h-[106px]">
+    <div class="flex-shrink-0 bg-[#FCC100] text-yellow-600 p-4 rounded-full">
+      <img src="images/Symbol (4).svg" alt="">
+    </div>
+     <div class="ml-4">
+        <div class="flex">
+           <h2 class="text-4xl">600</h2>
+           <p class="text-gray-700 m-2">Utilisateurs</p>
+      </div>
+             <span class="text-sm text-gray-500">Je ne sais pas quoi mettre</span>
+     </div>
+      </div>
+     <!-- Card 4 -->
+    <div class="bg-white shadow rounded-lg p-6 flex items-center md:w-full md:h-[106px]">
+       <div class="flex-shrink-0 bg-[#F90000] text-orange-600 p-4 rounded-full">
+       <img src="images/Symbol (1).svg" alt="">
+       </div>
+        <div class="ml-4">
+        <div class="flex">
+           <h2 class="text-4xl">25</h2>
+           <p class="text-gray-700 m-2">E-mails</p>
+        </div>
+            <span class="text-sm text-gray-500">Je ne sais pas quoi mettre</span>
+
+       </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="bg-white shadow rounded-lg p-6 flex items-center md:w-full md:h-[106px]">
+        <div class="flex-shrink-0 bg-[#9C27B0] text-purple-600 p-4 rounded-full">
+         <img src="images/Symbol (3).svg" alt="">
+       </div>
+        <div class="ml-4">
+         <div class="flex">
+        <h2 class="text-4xl">40</h2>
+        <p class="text-gray-700 m-2">Hôtels</p>
+       </div>
+        <span class="text-sm text-gray-500">Je ne sais pas quoi mettre</span>
+        </div>
+     </div>
+
+    <!-- Card 6 -->
+    <div class="bg-white shadow rounded-lg p-6 flex items-center md:w-full md:h-[106px]">
+    <div class="flex-shrink-0 bg-[#1565C0] text-blue-600 p-4 rounded-full">
+      <img src="images/Symbol (4).svg" alt="">
+    </div>
+     <div class="ml-4">
+      <div class="flex">
+        <h2 class="text-4xl ">02</h2>
+        <p class="text-gray-700 m-2 ">Entités</p>
+      </div>
+      <span class="text-sm text-gray-500">Je ne sais pas quoi mettre</span>
+     </div>
+    </div>
+
+
+
+    </div>
+   
+  </main>
+
+  <!-- Script toggle sidebar -->
+  <script>
+    const API_URL = 'http://localhost:5000/api';
+
+    // Protection : rediriger si pas de token
+    const token = localStorage.getItem('token');
+    if (!token) window.location.href = 'index.html';
+
+    // Sidebar hamburger
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    if (hamburger) hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('-translate-x-full');
+    });
+
+    // Déconnexion
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await fetch(`${API_URL}/auth/logout`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+      } catch(_) {}
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = 'index.html';
+    });
+
+    // Charger les KPIs depuis l'API
+    async function loadKpis() {
+      try {
+        const res  = await fetch(`${API_URL}/dashboard/kpis`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          // Mettre à jour les cards dynamiquement
+          const cards = {
+            forms:    data.forms,
+            messages: data.messages,
+            users:    data.users,
+            emails:   data.emails,
+            hotels:   data.hotels,
+            entities: data.entities
+          };
+          const h2s = document.querySelectorAll('.text-4xl');
+          const keys = Object.values(cards);
+          h2s.forEach((el, i) => {
+            if (keys[i] !== undefined) el.textContent = keys[i];
+          });
+        }
+      } catch(err) {
+        console.error('Erreur KPIs :', err);
+      }
+    }
+    loadKpis();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<section class="bg-[rgba(73,76,79,1)] dark:bg-gray-900">
+  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 w-[484px] h-[649.59]">
+      <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-white dark:text-white">
+          <img class="w-8 h-8 mr-2" src="./images/logo.svg" alt="logo">
+          RED PRODUCT
+      </a>
+      <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1 class="text-lg font-semibold leading-tight tracking-tight text-gray-900 md:text-lg dark:text-white">
+                Inscrivez-vous en tant que Admin
+              </h1>
+              <form id="registerForm" class="space-y-4 md:space-y-6" action="#">
+                  <div>
+                      <label for="nom" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
+                      <input type="text" name="nom" id="nom" class="bg-gray-50 border-b border-b-[2px] border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-0 block w-full p-2.5" placeholder="" required>
+                  </div>
+                  <div>
+                      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-mail</label>
+                      <input type="email" name="email" id="email" class="bg-gray-50 border-b border-b-[2px] border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-0 block w-full p-2.5" placeholder="" required>
+                  </div>
+                  <div>
+                      <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot de passe</label>
+                      <input type="password" name="password" id="password" class="bg-gray-50 border-b border-b-[2px] border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-0 block w-full p-2.5" required>
+                  </div>
+                  <div class="flex items-start">
+                      <div class="flex items-center h-5">
+                        <input id="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:outline-none focus:ring-0" required>
+                      </div>
+                      <div class="ml-3 text-sm">
+                        <label for="terms" class="font-semibold text-lg text-gray-900 dark:text-gray-300">Accepter les termes et la politique</label>
+                      </div>
+                  </div>
+                  <p id="errorMsg" class="text-red-500 text-sm hidden"></p>
+                  <button type="submit" class="w-full h-[35px] text-white bg-[rgba(73,76,79,1)] hover:bg-gray-700 font-medium rounded-lg text-sm text-center">S'inscrire</button>
+              </form>
+          </div>
+      </div>
+      <p class="text-sm font-light text-white dark:text-gray-400 mt-4">
+          Vous avez déjà un compte? <a href="index.html" class="font-medium text-[rgba(225,217,100,1)] hover:underline">Se connecter</a>
+      </p>
+  </div>
+</section>
+
+<script>
+const API_URL = 'http://localhost:5000/api';
+
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const errorMsg = document.getElementById('errorMsg');
+  errorMsg.classList.add('hidden');
+
+  const name     = document.getElementById("nom").value.trim();
+  const email    = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  try {
+    const res  = await fetch(`${API_URL}/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password })
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      window.location.href = "dasboard.html";
+    } else {
+      errorMsg.textContent = data.message || "Erreur lors de l'inscription.";
+      errorMsg.classList.remove('hidden');
+    }
+  } catch (err) {
+    errorMsg.textContent = "Erreur de connexion au serveur.";
+    errorMsg.classList.remove('hidden');
+  }
+});
+</script>
+</body>
+</html>

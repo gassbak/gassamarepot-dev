@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mot de passe oublié</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<section class="bg-[rgba(73,76,79,1)] dark:bg-gray-900">
+  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-white dark:text-white">
+          <img class="w-8 h-8 mr-2" src="images/logo.svg" alt="logo">
+          RED PRODUCT
+      </a>
+      <div class="w-full lg:w-[484px] p-6 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md dark:bg-gray-800 dark:border-gray-700 sm:p-8">
+            <h1 class="mb-1 text-xl font-extrabold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+              Mot de passe oublié ?
+          </h1>
+          <p class="font-semibold text-gray-900 dark:text-gray-400">
+            Entrez votre adresse e-mail ci-dessous et<br>
+            nous vous envoyons des instructions sur la<br>
+            façon de modifier votre mot de passe.
+          </p>
+          <form id="forgotForm" class="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#">
+              <div>
+                  <label for="email" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Votre e-mail</label>
+                  <input type="email" name="email" id="email"
+                    class="bg-gray-50 border-b border-b-[2px] border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-0 block w-full p-2.5"
+                    placeholder="" required>
+              </div>
+              <p id="successMsg" class="text-green-600 text-sm hidden"></p>
+              <p id="errorMsg"   class="text-red-500   text-sm hidden"></p>
+              <button type="submit"
+                class="w-full text-white bg-[rgba(73,76,79,1)] hover:bg-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                Envoyer
+              </button>
+          </form>
+      </div>
+      <div class="ml-3 text-sm mt-6">
+        <label class="font-light text-white">
+          Revenir à la <a class="font-medium text-[rgba(225,217,100,1)] hover:underline" href="index.html">connexion</a>
+        </label>
+      </div>
+  </div>
+</section>
+
+<script>
+const API_URL = 'http://localhost:5000/api';
+
+document.getElementById("forgotForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const successMsg = document.getElementById('successMsg');
+  const errorMsg   = document.getElementById('errorMsg');
+  successMsg.classList.add('hidden');
+  errorMsg.classList.add('hidden');
+
+  const email = document.getElementById("email").value.trim();
+
+  try {
+    const res  = await fetch(`${API_URL}/auth/forgot-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      successMsg.textContent = "✅ " + data.message;
+      successMsg.classList.remove('hidden');
+      setTimeout(() => window.location.href = "index.html", 3000);
+    } else {
+      errorMsg.textContent = "❌ " + (data.message || "Erreur.");
+      errorMsg.classList.remove('hidden');
+    }
+  } catch (err) {
+    errorMsg.textContent = "❌ Erreur de connexion au serveur.";
+    errorMsg.classList.remove('hidden');
+  }
+});
+</script>
+</body>
+</html>
