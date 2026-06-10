@@ -97,3 +97,54 @@ if (protectedPages.includes(currentPage)) {
   const token = localStorage.getItem('token');
   if (!token) window.location.href = 'index.html';
 }
+
+// ── Formulaire création hôtel ──────────────────────────────────────────────
+const createHotelForm = document.getElementById('createHotelForm');
+if (createHotelForm) {
+  createHotelForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const token = localStorage.getItem('token');
+    const name = document.getElementById('hotelName').value;
+    const address = document.getElementById('hotelAddress').value;
+    const email = document.getElementById('hotelEmail').value;
+    const phone = document.getElementById('hotelPhone').value;
+    const pricePerNight = document.getElementById('hotelPrice').value;
+    const currency = document.getElementById('hotelCurrency').value;
+    const imageFile = document.getElementById('hotelImage').files[0];
+
+    try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('address', address);
+      formData.append('email', email);
+      formData.append('phone', phone);
+      formData.append('pricePerNight', pricePerNight);
+      formData.append('currency', currency);
+      if (imageFile) {
+        formData.append('image', imageFile);
+      }
+
+      const res = await fetch(`${API_URL}/hotels`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert('✅ Hôtel créé avec succès!');
+        createHotelForm.reset();
+        document.getElementById('modalContent').classList.add('hidden');
+        // Recharger la page pour voir le nouvel hôtel
+        location.reload();
+      } else {
+        alert('❌ ' + (data.message || 'Erreur lors de la création'));
+      }
+    } catch (err) {
+      console.error('Erreur:', err);
+      alert('❌ Impossible de contacter le serveur');
+    }
+  });
+}
