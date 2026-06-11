@@ -103,17 +103,17 @@
       <img id="closeModal" src="images/arrow-left.svg" alt="return" class="text-2xl md:mt-2 mr-2 ">
       CRÉER UN NOUVEAU HÔTEL</h1>
 
-    <form class="space-y-6">
+    <form id="createHotelForm" class="space-y-6">
       <!-- Champs alignés par deux -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label class="block text-sm font-medium text-gray-700">Nom de l’hôtel</label>
-          <input type="text" placeholder="Nom de l'hôtel"
+          <label class="block text-sm font-medium text-gray-700">Nom de l'hôtel</label>
+          <input type="text" id="hotelName" placeholder="Nom de l'hôtel" required
                  class="mt-1 block w-full border p-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700">Adresse</label>
-          <input type="text" placeholder="Adresse"
+          <input type="text" id="hotelAddress" placeholder="Adresse" required
                  class="mt-1 block w-full border p-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </div>
       </div>
@@ -121,12 +121,12 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label class="block text-sm font-medium text-gray-700">E-mail</label>
-          <input type="email" placeholder="email@hotel.com"
+          <input type="email" id="hotelEmail" placeholder="email@hotel.com" required
                  class="mt-1 block w-full border p-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700">Numéro de téléphone</label>
-          <input type="tel" placeholder="+221 77 000 00 00"
+          <input type="tel" id="hotelPhone" placeholder="+221 77 000 00 00" required
                  class="mt-1 block w-full border p-2  rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </div>
       </div>
@@ -134,17 +134,17 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label class="block text-sm font-medium text-gray-700">Prix par nuit</label>
-          <input type="text" placeholder="25000"
+          <input type="number" id="hotelPrice" placeholder="25000" required
                  class="mt-1 block w-full border p-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700">Type de devise</label>
-          <select
+          <select id="hotelCurrency"
          class="mt-1 block w-[70%] md:w-full lg:w-full border p-2 rounded-md border-gray-300 shadow-sm
            focus:border-blue-500 focus:ring-blue-500">
-          <option>F XOF </option>
-          <option> Euro</option>
-          <option> Dollar </option>
+          <option value="XOF">F XOF</option>
+          <option value="EUR">Euro</option>
+          <option value="USD">Dollar</option>
 
           </select> 
       </div>
@@ -159,7 +159,7 @@
       <div class="border-2 border border-gray-300 rounded-lg p-0 flex flex-col items-center justify-center">
           <img src="images/image (8).svg" alt="" class="w-24 h-24">
            <p class="text-sm text-gray-500">Ajouter une photo</p>
-           <input type="file" accept="image/*" class="mt-2 text-sm text-gray-500">
+           <input type="file" id="hotelImage" accept="image/*" class="mt-2 text-sm text-gray-500">
       </div>
 
 
