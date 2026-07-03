@@ -1,70 +1,205 @@
-const Hotel = require('../models/hotel.model');
+const Hotel = require("../models/hotel.model");
 
-// ── GET /api/hotels ────────────────────────────────────────────────────────
+// ============================
+// GET TOUS LES HÔTELS
+// ============================
 exports.getHotels = async (req, res) => {
-  try {
-    const page  = parseInt(req.query.page)  || 1;
-    const limit = parseInt(req.query.limit) || 8;
-    const skip  = (page - 1) * limit;
+    try {
 
-    // Recherche optionnelle
-    const search = req.query.search || '';
-    const query = search
-      ? { name: { $regex: search, $options: 'i' } }
-      : {};
+        const hotels = await Hotel.find().populate("createdBy", "name email");
 
-    // Tri optionnel (ex: ?sort=pricePerNight ou ?sort=-pricePerNight)
-    const sortField = req.query.sort || '-createdAt';
+        res.status(200).json({
+            hotels,
+            pagination: {
+                total: hotels.length
+            }
+        });
 
-    const [hotels, total] = await Promise.all([
-      Hotel.find(query)
-        .sort(sortField)
-        .skip(skip)
-        .limit(limit)
-        .populate('createdBy', 'name email'),
-      Hotel.countDocuments(query)
-    ]);
+    } catch (error) {
 
-    res.status(200).json({
-      hotels,
-      pagination: {
-        total,
-        page,
-        pages: Math.ceil(total / limit),
-        limit
-      }
-    });
-  } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur.', error: err.message });
-  }
+        res.status(500).json({
+            message: "Erreur serveur",
+            error: error.message
+        });
+
+    }
 };
 
-// ── POST /api/hotels ───────────────────────────────────────────────────────
-exports.createHotel = async (req, res) => {
-  try {
-    const { name, address, email, phone, pricePerNight, currency } = req.body;
+// ============================
+// GET UN HÔTEL
+// ============================
+exports.getHotelById = async (req, res) => {
 
-    // Validation basique
-    if (!name || !address || !email || !phone || !pricePerNight) {
-      return res.status(400).json({ message: 'Tous les champs obligatoires doivent être remplis.' });
+    try {
+
+        const hotel = await Hotel.findById(req.params.id);
+
+        if (!hotel) {
+            return res.status(404).json({
+                message: "Hôtel introuvable"
+            });
+        }
+
+        res.status(200).json(hotel);
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
     }
 
-    // Image uploadée par multer
-    const image = req.file ? `/uploads/hotels/${req.file.filename}` : '';
+};
 
-    const hotel = await Hotel.create({
-      name,
-      address,
-      email,
-      phone,
-      pricePerNight: Number(pricePerNight),
-      currency: currency || 'XOF',
-      image,
-      createdBy: req.user._id
-    });
+// ============================
+// CRÉER UN HÔTEL
+// ============================
+exports.createHotel = async (req, res) => {
 
-    res.status(201).json({ message: 'Hôtel créé avec succès.', hotel });
-  } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur.', error: err.message });
-  }
+    try {
+
+        const {
+            name,
+            address,
+            email,
+            phone,
+            pricePerNight,
+            currency
+        } = req.body;
+
+        const image = req.file
+            ? `/uploads/hotels/${req.file.filename}`
+            : "";
+
+        const hotel = await Hotel.create({
+
+            name,
+            address,
+            email,
+            phone,
+            pricePerNight,
+            currency,
+            image,
+            createdBy: req.user._id
+
+        });
+
+        res.status(201).json({
+
+            message: "Hôtel créé avec succès",
+            hotel
+
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+
+            message: error.message
+
+        });
+
+    }
+
+};
+
+// ============================
+// MODIFIER UN HÔTEL
+// ============================
+exports.updateHotel = async (req, res) => {
+
+    try {
+
+        const updateData = {
+
+            name: req.body.name,
+            address: req.body.address,
+            email: req.body.email,
+            phone: req.body.phone,
+            pricePerNight: req.body.pricePerNight,
+            currency: req.body.currency
+
+        };
+
+        if (req.file) {
+
+            updateData.image = `/uploads/hotels/${req.file.filename}`;
+
+        }
+
+        const hotel = await Hotel.findByIdAndUpdate(
+
+            req.params.id,
+
+            updateData,
+
+            { new: true }
+
+        );
+
+        if (!hotel) {
+
+            return res.status(404).json({
+
+                message: "Hôtel introuvable"
+
+            });
+
+        }
+
+        res.status(200).json({
+
+            message: "Hôtel modifié avec succès",
+            hotel
+
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+
+            message: error.message
+
+        });
+
+    }
+
+};
+
+// ============================
+// SUPPRIMER UN HÔTEL
+// ============================
+exports.deleteHotel = async (req, res) => {
+
+    try {
+
+        const hotel = await Hotel.findByIdAndDelete(req.params.id);
+
+        if (!hotel) {
+
+            return res.status(404).json({
+
+                message: "Hôtel introuvable"
+
+            });
+
+        }
+
+        res.status(200).json({
+
+            message: "Hôtel supprimé avec succès"
+
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+
+            message: error.message
+
+        });
+
+    }
+
 };
