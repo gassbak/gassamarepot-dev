@@ -73,7 +73,7 @@
     <!-- Icônes -->
     <div class="flex items-start space-x-4">
       <img src="images/Symbol.svg" alt="base" class="w-6 h-6 mt-2"> 
-      <img src="images/List → Item → Link.png" alt="exposant" class="w-6 h-6  ">
+      <img src="images/KING.png" alt="exposant" class="w-6 h-6  ">
 
      </div>
     <!-- Profil -->
@@ -261,9 +261,9 @@
   
     </div>
   </main>
-
-  <!-- Script toggle sidebar -->
-  <script>
+<!-- 
+  <Script toggle sidebar>
+   
     const API_URL = 'http://localhost:5000/api';
 
     // Protection : rediriger si pas de token
@@ -343,49 +343,10 @@
           alert('❌ Erreur de connexion au serveur');
         }
       });
-    }
+    } 
 
-    // Charger les hôtels depuis l'API
-    async function loadHotels() {
-      const grid    = document.getElementById('hotelsGrid');
-      const counter = document.getElementById('hotelsCount');
-      if (!grid) return;
 
-      try {
-        const res  = await fetch(`${API_URL}/hotels`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await res.json();
-
-        if (!res.ok || data.hotels.length === 0) {
-          // Aucun hôtel en DB → garder les cartes statiques
-          return;
-        }
-
-        // Mettre à jour le compteur
-        if (counter) counter.textContent = data.pagination.total;
-
-        // Remplacer les cartes par les données de l'API
-        grid.innerHTML = data.hotels.map(h => `
-          <div class="bg-white shadow rounded-lg overflow-hidden">
-            <img src="${h.image ? 'http://localhost:5000' + h.image : 'images/image.svg'}"
-                 alt="${h.name}" class="w-full h-40 object-cover">
-            <div class="p-4">
-              <p class="text-xs text-[#8D4B38]">${h.address}</p>
-              <h2 class="text-lg font-semibold text-[#222222]">${h.name}</h2>
-              <p class="text-[#222222] text-xs mt-2">
-                ${Number(h.pricePerNight).toLocaleString('fr-FR')} ${h.currency} par nuit
-              </p>
-            </div>
-          </div>
-        `).join('');
-
-      } catch(err) {
-        console.error('Erreur chargement hôtels :', err);
-        // En cas d'erreur réseau → garder les cartes statiques
-      }
-    }
-    loadHotels();
-  </script>
+  </script>  -->
+  <script src="index.js"></script>
 </body>
 </html>
